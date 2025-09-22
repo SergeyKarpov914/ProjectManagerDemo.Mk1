@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>Clio.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <ApplicationIcon>image\clio.ico</ApplicationIcon>
+    <UserSecretsId>570d85f2-c7ba-403b-b3ca-a51007f644f5</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="content\**" />
+    <EmbeddedResource Remove="content\**" />
+    <None Remove="content\**" />
+    <Page Remove="content\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+    <None Remove="image\hamburger_icon.png" />
+    <None Remove="nlog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="template\TaskDataTemplate.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\clio.ico" />
+    <Content Include="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Acsp.Core.Lib" Version="2.4.5" />
+    <PackageReference Include="Acsp.Core8" Version="8.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+    <PackageReference Include="Syncfusion.Gantt.WPF" Version="30.2.7" />
+    <PackageReference Include="Syncfusion.Licensing" Version="30.2.7" />
+    <PackageReference Include="Syncfusion.SfBusyIndicator.WPF" Version="30.2.7" />
+    <PackageReference Include="Syncfusion.SfInput.WPF" Version="30.2.7" />
+    <PackageReference Include="Syncfusion.SfNavigationDrawer.WPF" Version="30.2.7" />
+    <PackageReference Include="Syncfusion.Shared.WPF" Version="30.2.7" />
+    <PackageReference Include="Syncfusion.Themes.MaterialLightBlue.WPF" Version="30.2.7" />
+    <PackageReference Include="Syncfusion.Tools.WPF" Version="30.2.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectManagerModel\ProjectManagerModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="image\hamburger_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>

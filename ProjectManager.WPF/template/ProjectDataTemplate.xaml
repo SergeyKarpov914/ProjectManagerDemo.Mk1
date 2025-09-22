@@ -1,0 +1,120 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:sync="http://schemas.syncfusion.com/wpf"
+					xmlns:gantt="clr-namespace:Syncfusion.Windows.Controls.Gantt;assembly=Syncfusion.Gantt.Wpf"
+					xmlns:local="clr-namespace:Clio.ProjectManagerDemo.WPF" 
+					xmlns:vm="clr-namespace:Clio.ProjectManagerModel.ViewModel.Content;assembly=ProjectManagerModel" 
+					xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+					>
+	<DataTemplate DataType="{x:Type vm:ProjectContent}">
+		<Grid   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" >
+			<Border Margin="20" Background="White" CornerRadius="1" Padding="10" >
+				<Border.Effect>
+					<DropShadowEffect Color="Black" BlurRadius="8" ShadowDepth="2" Opacity="0.4"/>
+				</Border.Effect>
+
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+
+
+                    <sync:SfTextBoxExt Grid.Row="0" Grid.ColumnSpan="4"
+						  		       HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left"
+                                       Height="30" Margin="0,20,0,10" Padding="10,0" Foreground="DarkSlateGray" FontWeight="DemiBold"
+								       IsReadOnly="True" Text="Projects"/>
+
+                    <sync:ButtonAdv Grid.Row="1" Grid.Column="0" Margin="0,0" Padding="20,5" Command="{Binding OpenExcelFileCommand}" Label="Import Projects from Excel"/>
+					<sync:ButtonAdv Grid.Row="1" Grid.Column="1" Margin="20,0" Padding="20,5" Command="{Binding OpenCsvFileCommand}" Label="Import Projects from CSV"/>
+
+					<sync:SfDataGrid 	   x:Name="projectGrid"
+										   Grid.Row="2" Grid.ColumnSpan="4" Margin="0,10"
+										   Height="300" VerticalAlignment="Top" AddNewRowPosition="Top"
+										   AllowEditing="True"
+										   AllowDeleting="True"
+										   SelectionUnit="Row"
+										   NewItemPlaceholderPosition="AtEnd"
+										   ItemsSource="{Binding ProjectElements}" 
+										   SelectedItem="{Binding SelectedItem}"
+                                           AutoGenerateColumns="False"	>
+							<i:Interaction.Triggers>
+								<i:EventTrigger EventName="AddNewRowInitiating">
+									<i:InvokeCommandAction Command="{Binding AddProjectCommand}" />
+								</i:EventTrigger>
+								<i:EventTrigger EventName="RowValidating">
+									<i:InvokeCommandAction Command="{Binding DataContext.SaveCommand, ElementName=projectGrid}" CommandParameter="{Binding SelectedItem, ElementName=projectGrid}"/>
+							</i:EventTrigger>
+								<i:EventTrigger EventName="RecordDeleting">
+									<i:InvokeCommandAction Command="{Binding DataContext.DeleteCommand, ElementName=projectGrid}" CommandParameter="{Binding SelectedItem, ElementName=projectGrid}"/>
+								</i:EventTrigger>
+
+						</i:Interaction.Triggers>
+
+						<sync:SfDataGrid.RecordContextMenu>
+							<ContextMenu>
+								<MenuItem x:Name="AddTask" Header="Add Task to Project" Command="{Binding Source={x:Static Member=vm:ProjectContent.AddTask}}"   CommandParameter="{Binding SelectedItem, ElementName=projectGrid}" /> 
+								<MenuItem x:Name="Save"    Header="Save Project"        Command="{Binding Source={x:Static Member=vm:ProjectContent.Save}}"   CommandParameter="{Binding SelectedItem, ElementName=projectGrid}" />
+								<MenuItem x:Name="Delete"  Header="Delete Project"      Command="{Binding Source={x:Static Member=vm:ProjectContent.Delete}}" CommandParameter="{Binding SelectedItem, ElementName=projectGrid}" />
+							</ContextMenu>
+						</sync:SfDataGrid.RecordContextMenu>
+
+						<sync:SfDataGrid.Columns>
+							<sync:GridTextColumn HeaderText="Database Id"  MappingName="Id" Width="80"/>
+							<sync:GridTextColumn HeaderText="Code"         MappingName="Code" Width="80"/>
+							<sync:GridTextColumn HeaderText="Name"         MappingName="Name"  Width="300"/>
+							<sync:GridTextColumn HeaderText="Client"       MappingName="Client" />
+							<sync:GridTextColumn HeaderText="Employee"     MappingName="Employee" />
+							<sync:GridTextColumn HeaderText="Account"      MappingName="AccountingName" />
+							<sync:GridTextColumn HeaderText="Project Type" MappingName="ProjectType" Width="250"/>
+						</sync:SfDataGrid.Columns>
+					</sync:SfDataGrid>
+
+                    <sync:SfTextBoxExt Grid.Row="3" Grid.ColumnSpan="4"
+						  		       HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left"
+                                       Height="30" Margin="0,20,0,0" Padding="10,0" Foreground="DarkSlateGray" FontWeight="DemiBold"
+								       IsReadOnly="True" Text="Tasks"/>
+                    
+                    <sync:SfTreeGrid Name="taskTree" 
+                               Grid.Row="4" Grid.ColumnSpan="4" Margin="0,10"
+                               ChildPropertyName="SubTasks"
+                               AutoExpandMode="AllNodesExpanded"
+   							   AllowEditing="True"
+                               ShowRowHeader="True" 
+                               SelectedItem="{Binding SelectedTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                               ItemsSource="{Binding TaskElements}"
+                               AutoGenerateColumns="False"
+                               SelfRelationRootValue="">
+
+							<sync:SfTreeGrid.RecordContextMenu>
+								<ContextMenu>
+									<MenuItem x:Name="AddSubTask"   Header="Add Sub-Task"   Command="{Binding Source={x:Static Member=vm:ProjectContent.AddSubTask}}" CommandParameter="{Binding SelectedItem, ElementName=taskTree}" />
+								</ContextMenu>
+							</sync:SfTreeGrid.RecordContextMenu>
+
+							<sync:SfTreeGrid.Columns>
+								<sync:TreeGridTextColumn     HeaderText="Parent"       MappingName="ParentCode" Width="80" AllowEditing="False"/>
+								<sync:TreeGridTextColumn     HeaderText="Code"         MappingName="Code"       Width="80"/>
+								<sync:TreeGridTextColumn     HeaderText="Name"         MappingName="Name"       Width="300"/>
+							    <sync:TreeGridDateTimeColumn HeaderText="Start Date"   MappingName="StartDate"  Width="150" CanEdit="True"/>
+							    <sync:TreeGridTextColumn     HeaderText="Duration"     MappingName="Days"       Width="100" AllowEditing="False" Padding="20,0"/>
+								<sync:TreeGridPercentColumn  HeaderText="Percent"      MappingName="Percent"    Width="100" AllowEditing="False"/>
+								<sync:TreeGridTextColumn     HeaderText="Id"           MappingName="Id"         Width="80" AllowEditing="False"/>
+							</sync:SfTreeGrid.Columns>
+				
+					</sync:SfTreeGrid>
+				</Grid>
+			</Border>
+		</Grid>
+	</DataTemplate>
+</ResourceDictionary>
+	
