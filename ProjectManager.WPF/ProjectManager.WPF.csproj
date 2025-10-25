@@ -39,8 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Acsp.Core.Lib" Version="2.4.5" />
-    <PackageReference Include="Acsp.Core8" Version="8.1.0" />
+    <PackageReference Include="Acsp.Core.Lib" Version="2.4.6" />
+    <PackageReference Include="Acsp.Core8" Version="8.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />

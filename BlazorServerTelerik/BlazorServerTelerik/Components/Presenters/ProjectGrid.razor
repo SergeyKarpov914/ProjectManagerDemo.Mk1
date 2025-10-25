@@ -1,0 +1,104 @@
+﻿@using Clio.ProjectManager.DTO
+@using Clio.ProjectManagerModel.ViewModel.Presentation
+@using Clio.ProjectManagerModel.ViewModel.Element
+@using System.ComponentModel
+@using Telerik.Blazor
+@using Telerik.Blazor.Components
+@using Telerik.SvgIcons
+
+@inject ProjectManagerViewModelBlazor viewModel
+
+<TelerikRootComponent>
+    <div>
+        <TelerikGrid Class="normal-grid"
+                         Data="@GridData"
+                         SelectionMode="GridSelectionMode.Single"
+                         @bind-SelectedItems="@SelectedItems"
+                         Size="@ThemeConstants.Grid.Size.Small" 
+                         Pageable="true"
+                         PageSize="10"
+                         Height="300px">
+            <GridColumns>
+                <GridCheckboxColumn Visible="true"
+                                    SelectAll="false"
+                                    CheckBoxOnlySelection="true"
+                                    Width="50px">
+                </GridCheckboxColumn>
+                <GridColumn Field=@nameof(ProjectElement.Code) Width="80" />
+                <GridColumn Field=@nameof(ProjectElement.Name)           Width="150" />
+                <GridColumn Field=@nameof(ProjectElement.Client)         Width="80"/>
+                <GridColumn Field=@nameof(ProjectElement.Employee)       Width="80"/>
+                <GridColumn Field=@nameof(ProjectElement.AccountingName) Width="100"/>
+                <GridColumn Field=@nameof(ProjectElement.ProjectType)    Width="200" />
+
+@*                 <GridCommandColumn Width="150px">
+                    <GridCommandButton Command="Edit" Icon="@SvgIcon.Pencil"></GridCommandButton>
+                    <GridCommandButton Command="Save" Icon="@SvgIcon.Save" ShowInEdit="true"></GridCommandButton>
+                    <GridCommandButton Command="Cancel" Icon="@SvgIcon.Cancel" ShowInEdit="true"></GridCommandButton>
+                </GridCommandColumn>
+ *@
+            </GridColumns>
+        </TelerikGrid>
+
+    </div>
+    <TelerikNotification @ref="@Notification"
+                         Class="notification-success"
+                         VerticalPosition="@NotificationVerticalPosition.Top"
+                         HorizontalPosition="@NotificationHorizontalPosition.Right"
+                         AnimationType="@AnimationType.Fade">
+    </TelerikNotification>
+</TelerikRootComponent>
+    
+@code {
+    public IEnumerable<ProjectElement> GridData { get; set; } = Enumerable.Empty<ProjectElement>();
+    private TelerikNotification Notification { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        GridData = await viewModel.GetProjects();
+        RestoreSelection();
+
+        viewModel.DataRefreshed += RefreshData;
+    }
+
+    private async void RefreshData(object sender, PropertyChangedEventArgs e)
+    {
+        GridData = await viewModel.GetProjects();
+        RestoreSelection();
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    #region selection
+
+    private IEnumerable<ProjectElement> _selected = new List<ProjectElement>();
+    private IEnumerable<ProjectElement> SelectedItems { get { return _selected; } set { _selected = value; OnSelection(); } }
+
+    private void OnSelection()
+    {
+        ProjectElement selected = SelectedItems.FirstOrDefault();
+
+        if (null != selected && selected.Entity is Project project)
+        {
+            viewModel.SelectedProject = project;
+        }
+    }
+
+    private void RestoreSelection()
+    {
+        if (_selected is List<ProjectElement> list && viewModel.SelectedProject is not null)
+        {
+            list.Clear();
+            ProjectElement selected = GridData.FirstOrDefault(x => x.Id == viewModel.SelectedProject.Id);
+
+            if (selected is not null)
+            {
+                list.Add(selected);
+            }
+            viewModel.SelectedProject = selected?.Entity as Project;
+        }
+    }
+
+    #endregion selection
+}

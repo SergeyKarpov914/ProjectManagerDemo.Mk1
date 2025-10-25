@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Core/">
+    <Project Path="../../AspClientServerPlatform.Mk1/Core/Core.Lib/Core.Lib.csproj" />
+  </Folder>
+  <Folder Name="/Domain/">
+    <Project Path="../ProjectManager.DTO/ProjectManager.DTO.csproj" />
+    <Project Path="../ProjectManagerModel/ProjectManagerModel.csproj" />
+  </Folder>
+  <Project Path="BlazorServerTelerik.Client/BlazorServerTelerik.Client.csproj" />
+  <Project Path="BlazorServerTelerik/BlazorServerTelerik.csproj" />
+</Solution>

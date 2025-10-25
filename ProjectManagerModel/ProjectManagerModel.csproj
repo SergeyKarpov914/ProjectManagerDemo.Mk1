@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Acsp.Core.Lib" Version="2.4.5" />
-    <PackageReference Include="Acsp.Core8" Version="8.1.0" />
+    <PackageReference Include="Acsp.Core.Lib" Version="2.4.6" />
+    <PackageReference Include="Acsp.Core8" Version="8.1.1" />
     <PackageReference Include="System.ObjectModel" Version="4.3.0" />
   </ItemGroup>
 

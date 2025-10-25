@@ -1,0 +1,152 @@
+﻿@page "/"
+
+@rendermode InteractiveServer
+@implements IDisposable
+
+@inject IJSRuntime js
+
+@using BlazorServerTelerik.Components.Presenters
+@using Telerik.Blazor
+@using Telerik.Blazor.Components
+@using Telerik.SvgIcons
+@using BlazorServerTelerik.Components
+@using BlazorServerTelerik.Components.Service
+
+@inject ThemeService themeService
+
+<style>
+    .custom-toolbar {
+        display: flex;
+        width: 100%;
+        align-items: center;
+    }
+    .custom-toolbar > :last-child {
+        margin-left: auto;
+    }
+</style>
+
+<TelerikRootComponent>
+
+    <div class="drawer-container" style="max-width:100% !important; width: calc(100% - 100px) !important; 
+                                         transform: none !important; margin-left:50px; margin-right:50px !important;">
+        <span class="custom-toolbar">
+            <TelerikButton OnClick="@ToggleDrawer" Icon="@SvgIcon.Menu" FillMode="@(ThemeConstants.Button.FillMode.Flat)"></TelerikButton>
+            <TelerikDropDownList 
+                        Data="@ThemeData"
+                        Value="@ThemeSwatchValue"
+                        ValueChanged="@ThemeSwatchValueChanged"
+                        TItem="@ThemeModel"
+                        TValue="@int"
+                        ValueField="@nameof(ThemeModel.Id)"
+                        TextField="@nameof(ThemeModel.FullName)"
+                        Width="240px">
+            </TelerikDropDownList>
+        </span>
+       
+        <TelerikDrawer @ref="@Drawer" Data="Data" MiniMode="true" Mode="@DrawerMode.Push" @bind-SelectedItem="SelectedItem">
+            <DrawerContent>
+                @switch (SelectedItem.Text)
+                {
+                    case "Project":
+                        <Project />
+                        break;
+                    case "Gantt":
+                        <Gantt />
+                        break;
+                }
+            </DrawerContent>
+        </TelerikDrawer>
+  </div>
+</TelerikRootComponent>
+
+@code {
+
+    private List<ThemeModel> ThemeData { get; set; } = new();
+
+    private int ThemeSwatchValue { get; set; } = 1;
+    private const string ThemeUrlTemplate = "https://unpkg.com/@progress/kendo-theme-{0}@12.0.1/dist/{0}-{1}.css";
+
+    private bool LoaderVisible { get; set; }
+
+    public TelerikDrawer<DrawerItem> Drawer { get; set; }
+    public DrawerItem SelectedItem { get; set; }
+
+    #region data
+    
+    public IEnumerable<DrawerItem> Data { get; set; } =
+        new List<DrawerItem>
+        {
+            new DrawerItem { Text = "Project", Icon = SvgIcon.TrackChanges, },
+            new DrawerItem { IsSeparator = true},
+            new DrawerItem { Text = "Gantt",   Icon = SvgIcon.ChartBarRange,  },
+            new DrawerItem { IsSeparator = true},
+        };
+
+    private void PopulateThemes()
+    {
+        ThemeData.Add(new ThemeModel(1, "Bootstrap", "Main"));
+        ThemeData.Add(new ThemeModel(2, "Bootstrap", "Main-Dark"));
+        ThemeData.Add(new ThemeModel(3, "Fluent"   , "Main"));
+        ThemeData.Add(new ThemeModel(4, "Default"  , "Main"));
+        ThemeData.Add(new ThemeModel(5, "Default"  , "Main-Dark"));
+        ThemeData.Add(new ThemeModel(6, "Default"  , "Ocean-Blue"));
+        ThemeData.Add(new ThemeModel(7, "Material" , "Main"));
+        ThemeData.Add(new ThemeModel(8, "Material" , "Main-Dark"));
+        ThemeData.Add(new ThemeModel(9, "Material" , "Nova"));
+    }
+
+    #endregion data
+
+    public async Task ToggleDrawer() => await Drawer.ToggleAsync();
+
+    private DotNetObjectReference<TelerikDrawer<DrawerItem>> DotNetRef { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        PopulateThemes();
+        SelectedItem = Data.First(); // Project
+        return base.OnInitializedAsync();
+    }
+
+    #region themes
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        DotNetRef = DotNetObjectReference.Create(Drawer);
+
+        if (firstRender)
+        {
+            await Task.Delay(1); // Ensure HTML is ready
+            await js.InvokeVoidAsync("saveDotNetRef", DotNetRef);
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private async Task ThemeSwatchValueChanged(int newValue)
+    {
+        ThemeSwatchValue = newValue;
+        LoaderVisible = true;
+
+        ThemeModel newThemeModel = ThemeData.First(x => x.Id == ThemeSwatchValue);
+        string newThemeSwatchUrl = string.Format(ThemeUrlTemplate, newThemeModel.Theme.ToLower(), newThemeModel.Swatch.ToLower());
+
+        await js.InvokeVoidAsync("changeTelerikTheme", newThemeSwatchUrl);
+    }
+
+    [JSInvokable("NotifyThemeChanged")]
+    public void NotifyThemeChanged()
+    {
+        LoaderVisible = false;
+        StateHasChanged(); // This method is not an EventCallback, so you need StateHasChanged() to hide the Loader or make other changes in the UI
+    }
+
+    public void Dispose()
+    {
+        DotNetRef?.Dispose();
+    }
+
+    #endregion themes
+}
+
+
+

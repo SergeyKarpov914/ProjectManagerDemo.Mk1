@@ -1,10 +1,10 @@
 ﻿using Acsp.Core.Lib.Abstraction;
 using Acsp.Core.Lib.Extension;
+using Acsp.Core.Lib.Gateway;
 using Acsp.Core.Lib.Master;
 using Clio.ProjectManager.DTO;
 using Clio.ProjectManagerModel.ViewModel.Content;
 using Clio.ProjectManagerModel.ViewModel.Element;
-using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,33 +12,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Clio.ProjectManagerModel.ViewModel
+namespace Clio.ProjectManagerModel.ViewModel.Presentation
 {
-    #region content (datatemplate) types
-
-    public enum ContentType { Project, Task, Static, None }
-
-    public abstract class PresentationContent              // vm composition is used instead of inheritance, 
-    {                                                      // because vm is injected as singleton and itself depends on constructor injection
-        protected readonly IPMViewModel _viewModel;
-
-        protected PresentationContent(IPMViewModel viewModel)
-        {
-            _viewModel = viewModel;
-        }
-        protected ContentType ContentType { get; set; } = ContentType.None;
-    }
-
-    #endregion content (datatemplate) types
-
-    public partial class ProjectManagerViewModel : ObservableObject, IPMViewModel
+    public sealed class ProjectManagerViewModelWpf : ProjectManagerViewModel, IPMViewModel
     {
-        #region fields
+        public static DependencyMaster CascadeDependencies()
+        {
+            return new ViewModelDependenciesDesktop();
+        }
+
+        #region c-tor
 
         private ProjectContent _projectContent = null;
         private StaticContent _staticContent = null;
 
-        #endregion fields
+        public ProjectManagerViewModelWpf(ProjectManagerProcessor processor, IPresenter presenter, ExcelMaster excelMaster, CsvAdapter csvAdapter)
+            : base( processor, presenter, excelMaster, csvAdapter)       
+        {
+        }
+
+        #endregion c-tor            
 
         public ProjectManagerViewModel Initialize()
         {
@@ -73,16 +66,14 @@ namespace Clio.ProjectManagerModel.ViewModel
         public ObservableCollection<ProjectElement> ProjectElements { get; private set; } = new ObservableCollection<ProjectElement>();
         public ObservableCollection<TaskElement> TaskElements { get; private set; } = new ObservableCollection<TaskElement>();
 
-        private async Task GetProjects()
+        private async Task PopulateProjectCollection()
         {
-            await GetStaticEntities();
-            IEnumerable<Project> projects = await _processor.GetProjects();
-
+            IEnumerable<ProjectElement> elements = await GetProjects();
             ProjectElements.Clear();
 
-            foreach (Project project in projects)
+            foreach (ProjectElement element in elements)
             {
-                ProjectElements.Add(ProjectElement.Create(project, this));
+                ProjectElements.Add(element);
             }
         }
 
@@ -107,7 +98,7 @@ namespace Clio.ProjectManagerModel.ViewModel
             switch (content)
             {
                 case ContentType.Project:
-                    await GetProjects();
+                    await PopulateProjectCollection();
                     Content = _projectContent;
                     break;
                 case ContentType.Static:
@@ -236,7 +227,7 @@ namespace Clio.ProjectManagerModel.ViewModel
             task.Name = $"Task for {project.Code}";
             task.ProjectId = project.Id;
             task.StartDate = DateTime.Now;
-            task.Duration = NumericEx.RandomInRange(1, 5);
+            task.EndDate = DateTime.Now;
 
             TaskElements.Add(TaskElement.Create(task));
         }
@@ -249,8 +240,8 @@ namespace Clio.ProjectManagerModel.ViewModel
 
             task.Name = $"Sub-Task for {parentTask.Code}";
             task.ProjectId = parentTask.ProjectId;
-            task.StartDate = DateTime.Now.AddDays(parentTask.Duration);
-            task.Duration = parentTask.Duration;
+            task.StartDate = DateTime.Now;
+            task.EndDate = DateTime.Now;
 
             task.ParentTaskId = parentTask.Id;
             task.ParentCode = parentTask.Code;

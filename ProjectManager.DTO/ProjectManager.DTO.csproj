@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Acsp.Core.Lib" Version="2.4.5" />
+    <PackageReference Include="Acsp.Core.Lib" Version="2.4.6" />
   </ItemGroup>
 
 </Project>

@@ -117,9 +117,9 @@ CREATE TABLE [dbo].[Task](
 	[ProjectId] [int] NOT NULL,
 	[ParentTaskId] [int] NULL,
 	[ParentCode] [nvarchar](255) NULL,
-	[Percent] [numeric](7, 2) NULL,
 	[StartDate] [date] NOT NULL,
-	[Duration] [int] NOT NULL,
+	[EndDate] [date] NOT NULL,
+	[PercentComplete] [float] NOT NULL,
  CONSTRAINT [PK_Task] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

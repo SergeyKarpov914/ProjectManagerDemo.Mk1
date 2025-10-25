@@ -10,17 +10,17 @@ namespace Clio.ProjectManager.DTO
     [Table("[dbo].[Task]")]
     public class ProjectTask : IEntity
     {
-        [Column("Id")][PKey]        public int      Id           { get; set; }
-        [Column("Name")]            public string   Name         { get; set; }
-        [Column("Code")]            public string   Code         { get; set; }
+        [Column("Id")][PKey]        public int      Id              { get; set; }
+        [Column("Name")]            public string   Name            { get; set; }
+        [Column("Code")]            public string   Code            { get; set; }
         
-        [Column("ProjectId")][FKey] public int      ProjectId    { get; set; }
-        [Column("ParentTaskId")]    public int      ParentTaskId { get; set; }
-        [Column("ParentCode")]      public string   ParentCode   { get; set; }
+        [Column("ProjectId")][FKey] public int      ProjectId       { get; set; }
+        [Column("ParentTaskId")]    public int      ParentTaskId    { get; set; }
+        [Column("ParentCode")]      public string   ParentCode      { get; set; }
         
-        [Column("Percent")]         public decimal  Percent      { get; set; }
-        [Column("StartDate")]       public DateTime StartDate    { get; set; }
-        [Column("Duration")]        public int      Duration     { get; set; }
+        [Column("StartDate")]       public DateTime StartDate       { get; set; }
+        [Column("EndDate")]         public DateTime EndDate         { get; set; }
+        [Column("PercentComplete")] public double   PercentComplete { get; set; }
 
         [NotMapped] public List<ProjectTask> SubTasks { get; set; } = new List<ProjectTask>();
 

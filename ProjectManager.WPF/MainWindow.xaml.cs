@@ -2,7 +2,7 @@
 using Acsp.Core.Lib.Extension;
 using Acsp.Core.Lib.Master;
 using Clio.ProjectManager.WPF.WinUtil;
-using Clio.ProjectManagerModel.ViewModel;
+using Clio.ProjectManagerModel.ViewModel.Presentation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
@@ -13,7 +13,7 @@ namespace Clio.ProjectManagerDemo.WPF
         protected override void cascadeDependencies(IServiceCollection container)
         {
             container.AddTransient<IPresenter, Presenter>();
-            typeof(ProjectManagerViewModel).RegisterCascading(container, () => container.AddSingleton<ProjectManagerViewModel>());
+            typeof(ProjectManagerViewModelWpf).RegisterCascading(container, () => container.AddSingleton<ProjectManagerViewModelWpf>());
         }
     }
 
@@ -24,7 +24,7 @@ namespace Clio.ProjectManagerDemo.WPF
             return new MainWindowDependencies();
         }
 
-        public MainWindow(ProjectManagerViewModel viewModel)
+        public MainWindow(ProjectManagerViewModelWpf viewModel)
         {
             InitializeComponent();
 

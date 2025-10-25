@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11012.119 d18.0
+VisualStudioVersion = 18.0.11104.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{CF2B0D78-1740-421A-B4D5-C400D53710A5}"
 EndProject
@@ -10,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManager.DTO", "ProjectManager.DTO\ProjectManager.DTO.csproj", "{F1F54005-055F-7B03-47D0-13BBEE464662}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManagerModel", "ProjectManagerModel\ProjectManagerModel.csproj", "{A67628A6-361F-9715-568A-F14679FE092F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServerTelerik", "BlazorServerTelerik\BlazorServerTelerik\BlazorServerTelerik.csproj", "{24376B19-2A2E-EB16-48DC-ACC82436781C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServerTelerik.Client", "BlazorServerTelerik\BlazorServerTelerik.Client\BlazorServerTelerik.Client.csproj", "{CADBA052-558C-0FE1-271D-CE40582FA81B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +33,14 @@ Global
 		{A67628A6-361F-9715-568A-F14679FE092F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A67628A6-361F-9715-568A-F14679FE092F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A67628A6-361F-9715-568A-F14679FE092F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24376B19-2A2E-EB16-48DC-ACC82436781C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24376B19-2A2E-EB16-48DC-ACC82436781C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24376B19-2A2E-EB16-48DC-ACC82436781C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24376B19-2A2E-EB16-48DC-ACC82436781C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CADBA052-558C-0FE1-271D-CE40582FA81B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CADBA052-558C-0FE1-271D-CE40582FA81B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CADBA052-558C-0FE1-271D-CE40582FA81B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CADBA052-558C-0FE1-271D-CE40582FA81B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

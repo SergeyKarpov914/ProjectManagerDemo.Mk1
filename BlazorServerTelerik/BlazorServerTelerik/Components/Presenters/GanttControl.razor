@@ -1,0 +1,58 @@
+﻿@using Clio.ProjectManagerModel.ViewModel.Presentation
+@using Clio.ProjectManagerModel.ViewModel.Element
+@using Telerik.Blazor.Components
+@using Telerik.SvgIcons
+
+@inject ProjectManagerViewModelBlazor viewModel
+
+<TelerikGantt Data="@Data"
+              Width="100%"
+              @bind-TreeListWidth="@TreeListWidth"
+              IdField="Id"
+              ParentIdField="ParentTaskId"
+              Height="800px"
+              ItemsField="Items"
+>
+@*     <GanttToolBarTemplate>
+        <GanttCommandButton Command="Add" Icon="@SvgIcon.Plus">Add</GanttCommandButton>
+    </GanttToolBarTemplate>
+ *@    <GanttColumns>
+        <GanttColumn Field="Id"
+                     Visible="false">
+        </GanttColumn>
+        <GanttColumn Field="Name"
+                     Expandable="true"
+                     Width="200px"
+                     Title="Task Name">
+        </GanttColumn>
+        <GanttColumn Field="Start"
+                     Width="100px"
+                     DisplayFormat="{0:d}">
+        </GanttColumn>
+        <GanttColumn Field="End"
+                     Width="100px"
+                     DisplayFormat="{0:d}">
+        </GanttColumn>
+        <GanttColumn Field="PercentComplete"
+                     Title="Percent Complete"
+                     Width="100px"
+                     DisplayFormat="{0:P}">
+        </GanttColumn>
+    </GanttColumns>
+    <GanttViews>
+        <GanttWeekView></GanttWeekView>
+    </GanttViews>
+</TelerikGantt>
+
+@code {
+    public int LastId { get; set; } = 1;
+    public string TreeListWidth { get; set; } = "50%";
+
+    List<TaskElement> Data { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        Data = (await viewModel.GetTasks()).ToList();
+        base.OnInitialized();
+    }
+}

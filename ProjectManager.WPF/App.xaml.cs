@@ -5,6 +5,7 @@ using Acsp.Core.Lib.Util;
 using Acsp.Core8.Asp.Net;
 using Clio.ProjectManager.DTO;
 using Clio.ProjectManagerModel.ViewModel;
+using Clio.ProjectManagerModel.ViewModel.Presentation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,7 +19,7 @@ namespace Clio.ProjectManagerDemo.WPF
     public partial class App : Application
     {
         #region fields
-        private IHost? _host;
+        private IHost _host;
         private IServiceCollection _container;
         private IConfiguration _configuration;
         #endregion fields
@@ -66,7 +67,7 @@ namespace Clio.ProjectManagerDemo.WPF
                 typeof(Project),     //
                 typeof(ProjectManagerViewModel),
             });
-            AspNetCore.ProcessDIContainer(typeof(ProjectManagerViewModel), _configuration.GetValue<string>("prefix"), _container);
+            AspNetCore.ProcessDIContainer(typeof(ProjectManagerViewModelWpf), _configuration.GetValue<string>("prefix"), _container);
             #endregion startup log
 
             base.OnStartup(e);

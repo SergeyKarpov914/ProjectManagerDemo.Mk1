@@ -102,12 +102,12 @@
 							</sync:SfTreeGrid.RecordContextMenu>
 
 							<sync:SfTreeGrid.Columns>
-								<sync:TreeGridTextColumn     HeaderText="Parent"       MappingName="ParentCode" Width="80" AllowEditing="False"/>
-								<sync:TreeGridTextColumn     HeaderText="Code"         MappingName="Code"       Width="80"/>
-								<sync:TreeGridTextColumn     HeaderText="Name"         MappingName="Name"       Width="300"/>
-							    <sync:TreeGridDateTimeColumn HeaderText="Start Date"   MappingName="StartDate"  Width="150" CanEdit="True"/>
-							    <sync:TreeGridTextColumn     HeaderText="Duration"     MappingName="Days"       Width="100" AllowEditing="False" Padding="20,0"/>
-								<sync:TreeGridPercentColumn  HeaderText="Percent"      MappingName="Percent"    Width="100" AllowEditing="False"/>
+								<sync:TreeGridTextColumn     HeaderText="Parent"       MappingName="ParentCode" Width="100" AllowEditing="False"/>
+								<sync:TreeGridTextColumn     HeaderText="Code"         MappingName="Code"       Width="150"/>
+								<sync:TreeGridTextColumn     HeaderText="Name"         MappingName="Name"       Width="200"/>
+							    <sync:TreeGridDateTimeColumn HeaderText="Start Date"   MappingName="Start"      Width="100" />
+								<sync:TreeGridDateTimeColumn HeaderText="End Date"     MappingName="End"        Width="100" />
+								<sync:TreeGridPercentColumn  HeaderText="Percent"      MappingName="PercentComplete" Width="100" AllowEditing="False"/>
 								<sync:TreeGridTextColumn     HeaderText="Id"           MappingName="Id"         Width="80" AllowEditing="False"/>
 							</sync:SfTreeGrid.Columns>
 				

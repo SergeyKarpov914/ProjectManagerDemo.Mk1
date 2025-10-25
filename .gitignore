@@ -12,3 +12,7 @@ Header_and_Footer/packages/
 .vs/
 *.log
 data/
+BlazorServerTelerik/BlazorServerTelerik.Client/bin/
+BlazorServerTelerik/BlazorServerTelerik.Client/obj/
+BlazorServerTelerik/BlazorServerTelerik/bin/
+BlazorServerTelerik/BlazorServerTelerik/obj/

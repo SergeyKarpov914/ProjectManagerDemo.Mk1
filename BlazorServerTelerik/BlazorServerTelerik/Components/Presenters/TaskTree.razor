@@ -1,0 +1,87 @@
+﻿@using BlazorServerTelerik.Components.Extension
+@using Clio.ProjectManagerModel.ViewModel.Presentation
+@using Clio.ProjectManagerModel.ViewModel.Element
+@using System.ComponentModel
+@using Telerik.Blazor
+@using Telerik.Blazor.Components
+@using Telerik.SvgIcons
+
+@inject ProjectManagerViewModelBlazor viewModel
+
+<TelerikTreeList 
+                 Data=@Tasks
+                IdField="Id"
+                ParentIdField="ParentTaskId"
+                Pageable="false"
+                EditMode="@TreeListEditMode.Inline"
+ 
+                ConfirmDelete="true"
+
+                OnAdd="@viewModel.OnTreeAdd"
+                OnCreate="@viewModel.OnTreeCreate"
+                OnUpdate="@viewModel.OnTreeUpdate"
+                OnDelete="@viewModel.OnTreeDelete">
+
+    <TreeListToolBarTemplate>
+        @if (viewModel.HasSelectedProject)
+        {
+            <TreeListCommandButton Command="Add" Icon="@SvgIcon.Plus">Add Top-level Task</TreeListCommandButton>
+        }
+    </TreeListToolBarTemplate>
+    <TreeListColumns>
+        <TreeListColumn Field="Code" Width="150px" Expandable="true" />
+        <TreeListColumn Field="Name" Width="200px" />
+        <TreeListColumn Field=Start Title="Start Date" DisplayFormat="{0:MM-dd-yyyy}" Width="100px"/>
+        <TreeListColumn Field=End Title="End Date" DisplayFormat="{0:MM-dd-yyyy}" Width="100px" />
+        <TreeListColumn Field=PercentComplete Title="Percent" Width="80px" />
+
+        <TreeListCommandColumn Width="150px">
+            @{var element = context as TaskElement;
+                if (element.IsParent)
+                {
+                    <TreeListCommandButton Command="Add" Icon="@SvgIcon.Plus"></TreeListCommandButton>
+                }
+            }
+            <TreeListCommandButton Command="Edit" Icon="@SvgIcon.Pencil"></TreeListCommandButton>
+            <TreeListCommandButton Command="Delete" Icon="@SvgIcon.Trash"></TreeListCommandButton>
+            <TreeListCommandButton Command="Save" Icon="@SvgIcon.Save" ShowInEdit="true"></TreeListCommandButton>
+            <TreeListCommandButton Command="Cancel" Icon="@SvgIcon.Cancel" ShowInEdit="true"></TreeListCommandButton>
+        </TreeListCommandColumn>
+    </TreeListColumns>
+</TelerikTreeList>
+
+<TelerikNotification @ref="@Notification"
+                     Class="notification-success"
+                     VerticalPosition="@NotificationVerticalPosition.Top"
+                     HorizontalPosition="@NotificationHorizontalPosition.Right"
+                     AnimationType="@AnimationType.Fade">
+</TelerikNotification>
+
+
+@code {
+    private IEnumerable<TaskElement> Tasks { get; set; } = Enumerable.Empty<TaskElement>();
+    private TelerikNotification Notification { get; set; }
+
+    [CascadingParameter]
+    private DialogFactory Dialogs { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Tasks = await viewModel.GetTasks();
+        await base.OnInitializedAsync();
+
+        viewModel.ProjectChanged += RefreshData;
+        viewModel.DataRefreshed += RefreshData;
+    }
+
+    private async void RefreshData(object sender, PropertyChangedEventArgs e)
+    {
+        Tasks = await viewModel.GetTasks();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task<bool> ConfirmDelete(string taskName)
+    {
+        return await Dialogs.ConfirmAsync($"Are you sure you want to delete task '{taskName}'?", "Confirm Deletion");
+    }
+}

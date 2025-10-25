@@ -1,0 +1,31 @@
+@using BlazorServerTelerik.Components.Presenters
+@using Telerik.Blazor
+@using Telerik.Blazor.Components
+
+<div>
+    <TelerikCard >
+        <CardHeader Class="k-hbox">
+            <div>
+                <CardTitle>Projects</CardTitle>
+            </div>
+        </CardHeader>
+        <CardBody>
+            <div>
+                <ProjectGrid></ProjectGrid>
+            </div>
+        </CardBody>
+    </TelerikCard>
+    <br/><br/>
+    <TelerikCard>
+        <CardHeader Class="k-hbox">
+            <div>
+                <CardTitle>Tasks</CardTitle>
+            </div>
+        </CardHeader>
+        <CardBody>
+            <div>
+                <TaskTree></TaskTree>
+            </div>
+        </CardBody>
+    </TelerikCard>
+</div>
