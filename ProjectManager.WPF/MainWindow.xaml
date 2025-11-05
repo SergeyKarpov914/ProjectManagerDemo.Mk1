@@ -77,24 +77,6 @@
 			</syncfusion:NavigationItem.Icon>
 		</syncfusion:NavigationItem>
 
-        <!-- Removed Gantt: <syncfusion:NavigationItem
-                Header="Tasks"
-                IsExpanded="True"
-                IsSelected="True"
-			    Command="{Binding ContentSwitchCommand}"
-                CommandParameter="Task">
-			<syncfusion:NavigationItem.Icon>
-				<Path
-                Width="16"
-                Height="13"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Data="{StaticResource Drafts}"
-                Fill="Black"
-                Stretch="Fill" />
-			</syncfusion:NavigationItem.Icon>
-		</syncfusion:NavigationItem>-->
-
         <!-- End Drawer Navigation Items -->
         
         <syncfusion:SfNavigationDrawer.ContentView>
