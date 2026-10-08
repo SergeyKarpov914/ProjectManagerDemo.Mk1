@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Acsp.Core.Lib" Version="2.4.6" />
+    <ProjectReference Include="..\..\..\AspClientServerPlatform.Mk1\Core\Core.Lib\Core.Lib.csproj" />
   </ItemGroup>
 
 </Project>

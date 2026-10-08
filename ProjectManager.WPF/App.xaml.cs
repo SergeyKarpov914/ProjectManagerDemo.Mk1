@@ -16,7 +16,7 @@ using System.Windows;
 
 namespace Clio.ProjectManagerDemo.WPF
 {
-    public partial class App : Application
+    public partial class App : Application  // Mk1
     {
         #region fields
         private IHost _host;

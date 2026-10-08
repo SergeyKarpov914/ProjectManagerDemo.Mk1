@@ -14,7 +14,7 @@ namespace Clio.ProjectManagerModel.ViewModel.Element
             Entity = new Project();
         }
 
-        public IElement SetRelations(IEntity entity, IEntity project, IElement parent = null)
+        public IElement SetRelations(IEntity entity)
         {
             Entity = entity;
             return this;
@@ -22,7 +22,7 @@ namespace Clio.ProjectManagerModel.ViewModel.Element
 
         public static ProjectElement Create(Project project, IPMStatic vm)
         {
-            ProjectElement element = new ProjectElement().SetRelations(project, project) as ProjectElement;
+            ProjectElement element = new ProjectElement().SetRelations(project) as ProjectElement;
 
             #region set foreign key properties
 

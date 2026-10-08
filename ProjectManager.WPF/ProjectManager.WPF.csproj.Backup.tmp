@@ -45,7 +45,6 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.12" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
-	<PackageReference Include="System.Text.Json" Version="10.0.3" />
     <PackageReference Include="Syncfusion.Gantt.WPF" Version="30.2.7" />
     <PackageReference Include="Syncfusion.Licensing" Version="30.2.7" />
     <PackageReference Include="Syncfusion.SfBusyIndicator.WPF" Version="30.2.7" />
@@ -54,10 +53,10 @@
     <PackageReference Include="Syncfusion.Shared.WPF" Version="30.2.7" />
     <PackageReference Include="Syncfusion.Themes.MaterialLightBlue.WPF" Version="30.2.7" />
     <PackageReference Include="Syncfusion.Tools.WPF" Version="30.2.7" />
+    <PackageReference Include="System.Text.Json" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\AspClientServerPlatform.Mk1\Core\Core.Lib\Core.Lib.csproj" />
     <ProjectReference Include="..\ProjectManagerModel\ProjectManagerModel.csproj" />
   </ItemGroup>
 

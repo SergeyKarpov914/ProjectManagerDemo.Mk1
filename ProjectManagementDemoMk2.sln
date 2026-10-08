@@ -11,9 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManager.DTO", "Proje
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManagerModel", "ProjectManagerModel\ProjectManagerModel.csproj", "{A67628A6-361F-9715-568A-F14679FE092F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServerTelerik", "BlazorServerTelerik\BlazorServerTelerik\BlazorServerTelerik.csproj", "{24376B19-2A2E-EB16-48DC-ACC82436781C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{5FB1DFCF-B986-4A50-B072-CEA211200443}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServerTelerik.Client", "BlazorServerTelerik\BlazorServerTelerik.Client\BlazorServerTelerik.Client.csproj", "{CADBA052-558C-0FE1-271D-CE40582FA81B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Lib", "..\..\AspClientServerPlatform.Mk1\Core\Core.Lib\Core.Lib.csproj", "{49C952A1-4FC3-BAE7-3A87-0F636D7A3B73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core8", "..\..\AspClientServerPlatform.Mk1\Core\Core8\Core8.csproj", "{6B31B94B-B375-F07B-1FF3-D936953A8C99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,14 +35,14 @@ Global
 		{A67628A6-361F-9715-568A-F14679FE092F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A67628A6-361F-9715-568A-F14679FE092F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A67628A6-361F-9715-568A-F14679FE092F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{24376B19-2A2E-EB16-48DC-ACC82436781C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{24376B19-2A2E-EB16-48DC-ACC82436781C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{24376B19-2A2E-EB16-48DC-ACC82436781C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{24376B19-2A2E-EB16-48DC-ACC82436781C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CADBA052-558C-0FE1-271D-CE40582FA81B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CADBA052-558C-0FE1-271D-CE40582FA81B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CADBA052-558C-0FE1-271D-CE40582FA81B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CADBA052-558C-0FE1-271D-CE40582FA81B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49C952A1-4FC3-BAE7-3A87-0F636D7A3B73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49C952A1-4FC3-BAE7-3A87-0F636D7A3B73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49C952A1-4FC3-BAE7-3A87-0F636D7A3B73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49C952A1-4FC3-BAE7-3A87-0F636D7A3B73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B31B94B-B375-F07B-1FF3-D936953A8C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B31B94B-B375-F07B-1FF3-D936953A8C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B31B94B-B375-F07B-1FF3-D936953A8C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B31B94B-B375-F07B-1FF3-D936953A8C99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +50,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F1F54005-055F-7B03-47D0-13BBEE464662} = {CF2B0D78-1740-421A-B4D5-C400D53710A5}
 		{A67628A6-361F-9715-568A-F14679FE092F} = {CF2B0D78-1740-421A-B4D5-C400D53710A5}
+		{49C952A1-4FC3-BAE7-3A87-0F636D7A3B73} = {5FB1DFCF-B986-4A50-B072-CEA211200443}
+		{6B31B94B-B375-F07B-1FF3-D936953A8C99} = {5FB1DFCF-B986-4A50-B072-CEA211200443}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9675B258-3232-4788-B125-E560434D609D}
